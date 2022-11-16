@@ -11,7 +11,8 @@ auth_ns = Namespace('auth')
 
 @auth_ns.route('/register/')
 class AuthView(Resource):
-    def post(self):
+    @staticmethod
+    def post():
         """
             Аутентификация и авторизация пользователя по username and password
         """
@@ -22,7 +23,8 @@ class AuthView(Resource):
 
 @auth_ns.route('/login/')
 class LoginView(Resource):
-    def post(self):
+    @staticmethod
+    def post():
         data = request.json
         email = data.get('email', None)
         password = data.get('password', None)
@@ -30,11 +32,12 @@ class LoginView(Resource):
         if None in [email, password]:
             abort(401)
 
-        #Получение токенов
+        # Получение токенов
         tokens = authentification_service.generate_tokens(email, password)
         return tokens, 201
 
-    def put(self):
+    @staticmethod
+    def put():
         """
             Обновление refresh_token
         """

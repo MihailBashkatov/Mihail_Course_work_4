@@ -5,9 +5,6 @@ from flask_restx import Resource, Namespace
 # Импорт схемы Movie
 from dao.model.movie import MovieSchema
 
-# Импорт декораторов
-from decorators.utils import auth_required
-
 # Импорт экземпляра класса MovieService
 from implemented import movie_service
 
@@ -25,33 +22,26 @@ class MoviesView(Resource):
         """
             Формирование представления для получения фильмов
         """
-        try:
-            param = None
-            data = None
-            status = request.args.get('status')
-            page = request.args.get('page')
-            if status:
-                param = 'status'
-            if page:
-                param = 'page'
-                data = page
-            movies = movie_service.get_movies(param, data)
-            movies_list = movies_schema.dump(movies)
-            return movies_list, 200
-        except Exception as e:
-            return e
+        param = None
+        data = None
+        status = request.args.get('status')
+        page = request.args.get('page')
+        if status:
+            param = 'status'
+        if page:
+            param = 'page'
+            data = page
+        movies = movie_service.get_movies(param, data)
+        movies_list = movies_schema.dump(movies)
+        return movies_list, 200
 
 
 @movies_ns.route('/<mid>/')
 class MovieView(Resource):
-    @auth_required
     def get(self, mid):
         """
             Формирование представления для получения фильма по id
             В случае отсутствия фильма возвращается 'No such movie'
         """
-        try:
-            movie = movie_service.get_movie(mid)
-            return movie_schema.dump(movie), 200
-        except Exception:
-            return 404
+        movie = movie_service.get_movie(mid)
+        return movie_schema.dump(movie), 200

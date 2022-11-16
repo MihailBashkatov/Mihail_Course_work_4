@@ -1,5 +1,4 @@
 # Импорт необходимых библиотек
-from flask import request
 from flask_restx import Resource, Namespace
 
 # Импорт схемы Genre
@@ -25,11 +24,9 @@ class GenresView(Resource):
         """
             Формирование представления для получения жанров
         """
-        try:
-            genres = genre_service.get_genres()
-            return genres_schema.dump(genres), 200
-        except Exception:
-            return 404
+
+        genres = genre_service.get_genres()
+        return genres_schema.dump(genres), 200
 
 
 @genre_ns.route('/<int:gid>/')
@@ -39,8 +36,6 @@ class GenreView(Resource):
         """
             Формирование представления для получения жанра по id
         """
-        try:
-            genre = genre_service.get_genre(gid)
-            return genre_schema.dump(genre), 200
-        except Exception:
-            return 404
+
+        genre = genre_service.get_genre(gid)
+        return genre_schema.dump(genre), 200

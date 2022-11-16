@@ -38,15 +38,12 @@ class AuthentificaionService:
         refresh_token = jwt.encode(data, secret, algorithm=algo)
         tokens = {"access_token": access_token, "refresh_token": refresh_token}
 
-        return tokens, 201
+        return tokens
 
     def update_tokens(self, token):
         """
             Обновление токенов по refresh_token
         """
-        try:
-            user_data = jwt.decode(jwt=token, key=secret, algorithms=[algo])
-            email = user_data.get('email')
-            return self.generate_tokens(email, None, is_refresh=True)
-        except Exception:
-            abort(401)
+        user_data = jwt.decode(jwt=token, key=secret, algorithms=[algo])
+        email = user_data.get('email')
+        return self.generate_tokens(email, None, is_refresh=True)

@@ -24,11 +24,8 @@ class DirectorsView(Resource):
         """
             Формирование представления для получения режиссеров
         """
-        try:
-            directors = director_service.get_directors()
-            return directors_schema.dump(directors), 200
-        except Exception as e:
-            return e
+        directors = director_service.get_directors()
+        return directors_schema.dump(directors), 200
 
 
 @director_ns.route('/<int:did>')
@@ -38,8 +35,6 @@ class DirectorView(Resource):
         """
             Формирование представления для получения режиссера по id
         """
-        try:
-            director = director_service.get_director(did)
-            return director_schema.dump(director), 200
-        except Exception:
-            return 404
+
+        director = director_service.get_director(did)
+        return director_schema.dump(director), 200

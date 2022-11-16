@@ -10,7 +10,7 @@ class UserDAO:
         """
             Получение пользователя по username
         """
-        return self.session.query(User).filter(User.email == user_email).one()
+        return self.session.query(User).filter(User.email == user_email).first()
 
     def delete_user(self, user_name):
         """
@@ -35,7 +35,6 @@ class UserDAO:
         """
         self.session.query(User).filter(User.name == user_name).update(data)
         self.session.commit()
-
 
     def get_all(self):
         """

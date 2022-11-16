@@ -27,6 +27,7 @@ class UserService:
         """
             Создание пользователя
         """
+        # self.get_user(data.get('email'))
         password = data.get('password')
         hashed_password = self.get_hash(password)
         data['password'] = hashed_password
