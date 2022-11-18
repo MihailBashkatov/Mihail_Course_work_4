@@ -3,6 +3,7 @@ import calendar
 import datetime
 from flask import abort
 import jwt
+from jwt import PyJWTError
 
 # Импорт констант
 from constants import algo, secret
@@ -26,19 +27,20 @@ class AuthentificaionService:
         if not is_refresh:
             if not self.user_service.compare_passwords(user.password, password):
                 abort(401)
+        try:
+            data = {"eamil": user.email}
 
-        data = {"email": user.email}
-
-        # Формирование срока действия токенов
-        min30 = datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
-        data["exp"] = calendar.timegm(min30.timetuple())
-        access_token = jwt.encode(data, secret, algorithm=algo)
-        days130 = datetime.datetime.utcnow() + datetime.timedelta(days=130)
-        data["exp"] = calendar.timegm(days130.timetuple())
-        refresh_token = jwt.encode(data, secret, algorithm=algo)
-        tokens = {"access_token": access_token, "refresh_token": refresh_token}
-
-        return tokens
+            # Формирование срока действия токенов
+            min30 = datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
+            data["exp"] = calendar.timegm(min30.timetuple())
+            access_token = jwt.encode(data, secret, algorithm=algo)
+            days130 = datetime.datetime.utcnow() + datetime.timedelta(days=130)
+            data["exp"] = calendar.timegm(days130.timetuple())
+            refresh_token = jwt.encode(data, secret, algorithm=algo)
+            tokens = {"access_token": access_token, "refresh_token": refresh_token}
+            return tokens
+        except PyJWTError:
+            print('Проверьте введенные данные')
 
     def update_tokens(self, token):
         """

@@ -11,23 +11,22 @@ class UserService:
     def __init__(self, dao):
         self.dao = dao
 
-    def get_user(self, user_email):
+    def get_user(self, email):
         """
             Получение пользователя по имени
         """
-        return self.dao.get_user(user_email)
+        return self.dao.get_user(email)
 
-    def delete_user(self, user_name):
+    def delete_user(self, email):
         """
             Удаление пользователя по имени
         """
-        self.dao.delete_user(user_name)
+        self.dao.delete_user(email)
 
     def create_user(self, data):
         """
             Создание пользователя
         """
-        # self.get_user(data.get('email'))
         password = data.get('password')
         hashed_password = self.get_hash(password)
         data['password'] = hashed_password

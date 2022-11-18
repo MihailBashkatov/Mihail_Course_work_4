@@ -6,17 +6,17 @@ class UserDAO:
     def __init__(self, session):
         self.session = session
 
-    def get_user(self, user_email):
+    def get_user(self, email):
         """
             Получение пользователя по username
         """
-        return self.session.query(User).filter(User.email == user_email).first()
+        return self.session.query(User).filter(User.email == email).first()
 
-    def delete_user(self, user_name):
+    def delete_user(self, email):
         """
             Удаление пользователя
         """
-        user = self.get_user(user_name)
+        user = self.get_user(email)
         self.session.delete(user)
         self.session.commit()
 
@@ -29,11 +29,11 @@ class UserDAO:
         self.session.commit()
         return new_user
 
-    def update_user(self, data, user_name):
+    def update_user(self, data, email):
         """
             Обновление пароля пользователя
         """
-        self.session.query(User).filter(User.name == user_name).update(data)
+        self.session.query(User).filter(User.name == email).update(data)
         self.session.commit()
 
     def get_all(self):

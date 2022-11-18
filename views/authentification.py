@@ -14,7 +14,7 @@ class AuthView(Resource):
     @staticmethod
     def post():
         """
-            Аутентификация и авторизация пользователя по username and password
+            Регистрация пользователя по username and password
         """
         data = request.json
         user_service.create_user(data)
@@ -23,6 +23,9 @@ class AuthView(Resource):
 
 @auth_ns.route('/login/')
 class LoginView(Resource):
+    """
+        Аутентификация и авторизация пользователя по user_email and password
+    """
     @staticmethod
     def post():
         data = request.json
