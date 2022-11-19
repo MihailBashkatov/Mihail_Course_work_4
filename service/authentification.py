@@ -28,7 +28,7 @@ class AuthentificaionService:
             if not self.user_service.compare_passwords(user.password, password):
                 abort(401)
         try:
-            data = {"eamil": user.email}
+            data = {"email": user.email}
 
             # Формирование срока действия токенов
             min30 = datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
