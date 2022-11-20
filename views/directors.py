@@ -20,7 +20,8 @@ directors_schema = DirectorSchema(many=True)
 
 @director_ns.route('/')
 class DirectorsView(Resource):
-    def get(self):
+    @staticmethod
+    def get():
         """
             Формирование представления для получения режиссеров
         """

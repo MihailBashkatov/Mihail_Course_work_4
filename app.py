@@ -12,6 +12,7 @@ from views.directors import director_ns
 from views.genres import genre_ns
 from views.movies import movies_ns
 from views.authentification import auth_ns
+from views.users import users_ns
 
 
 def create_app(config_object):
@@ -33,6 +34,7 @@ def register_extensions(app):
     db.create_all()
     api = Api(app)
     api.add_namespace(director_ns)
+    api.add_namespace(users_ns)
     api.add_namespace(genre_ns)
     api.add_namespace(movies_ns)
     api.add_namespace(auth_ns)

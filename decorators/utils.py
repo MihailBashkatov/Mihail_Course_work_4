@@ -11,9 +11,16 @@ def auth_required(func):
     def wrapper(*args, **kwargs):
         if 'Authorization' not in request.headers:
             abort(401)
-        data = request.headers['Authorization']
-        token = data.split("Bearer ")[-1]
-        jwt.decode(token, secret, algorithms=[algo])
-
+        get_token()
         return func(*args, **kwargs)
     return wrapper
+
+
+def get_token():
+    """
+        Получение
+    """
+    data = request.headers['Authorization']
+    token = data.split("Bearer ")[-1]
+    token_decoded = jwt.decode(token, secret, algorithms=[algo])
+    return token_decoded

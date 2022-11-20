@@ -46,6 +46,6 @@ class AuthentificaionService:
         """
             Обновление токенов по refresh_token
         """
-        user_data = jwt.decode(jwt=token, key=secret, algorithms=[algo])
+        user_data = jwt
         email = user_data.get('email')
         return self.generate_tokens(email, None, is_refresh=True)

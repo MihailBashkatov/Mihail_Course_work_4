@@ -18,7 +18,8 @@ movies_schema = MovieSchema(many=True)
 
 @movies_ns.route('/')
 class MoviesView(Resource):
-    def get(self):
+    @staticmethod
+    def get():
         """
             Формирование представления для получения фильмов
         """
@@ -36,12 +37,10 @@ class MoviesView(Resource):
         return movies_list, 200
 
 
-@movies_ns.route('/<mid>/')
-class MovieView(Resource):
-    def get(self, mid):
-        """
-            Формирование представления для получения фильма по id
-            В случае отсутствия фильма возвращается 'No such movie'
-        """
-        movie = movie_service.get_movie(mid)
-        return movie_schema.dump(movie), 200
+def get(mid):
+    """
+        Формирование представления для получения фильма по id
+        В случае отсутствия фильма возвращается 'No such movie'
+    """
+    movie = movie_service.get_movie(mid)
+    return movie_schema.dump(movie), 200

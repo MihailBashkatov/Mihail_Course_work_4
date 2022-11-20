@@ -20,7 +20,8 @@ genres_schema = GenreSchema(many=True)
 
 @genre_ns.route('/')
 class GenresView(Resource):
-    def get(self):
+    @staticmethod
+    def get():
         """
             Формирование представления для получения жанров
         """
